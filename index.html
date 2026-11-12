@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snapdeal AI Virtual KAM | Seller Experience</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="brand-section">
+      <div class="snapdeal-logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span>snapdeal</span>
+        <span class="logo-badge">Virtual KAM</span>
+      </div>
+      <div class="seller-pill">
+        <span>Seller: <strong>Rajesh Garments (Ludhiana)</strong></span>
+        <span>•</span>
+        <span>ID: <strong>SD-8942</strong></span>
+        <span>•</span>
+        <span>Category: <strong>Fashion & Apparel</strong></span>
+      </div>
+    </div>
+    <div class="header-status">
+      <div class="live-indicator">
+        <span class="live-dot"></span>
+        <span>AI Engine Ready</span>
+      </div>
+      <button id="openSettingsBtn" class="btn btn-outline btn-sm" title="Configure AI & Voice settings">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <span>Settings</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- Left Column: Voice Call & Live Interaction -->
+    <section class="card voice-hero-card">
+      <div class="card-header">
+        <div class="card-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span>Live 2-Way Voice Call</span>
+        </div>
+        <div id="callTimer" style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">
+          00:00
+        </div>
+      </div>
+
+      <!-- Avatar & Audio Visualizer -->
+      <div class="kam-avatar-box">
+        <div class="visualizer-wrapper" id="visualizerWrapper">
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring"></div>
+          <canvas id="audioCanvas"></canvas>
+          <div class="voice-orb" id="voiceOrb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="22"></line>
+            </svg>
+          </div>
+        </div>
+
+        <div class="kam-identity">
+          <div class="kam-name">Priya Sharma</div>
+          <div class="kam-role">
+            <span>Senior AI Key Account Manager</span>
+            <span class="kam-badge">Snapdeal Partner Success</span>
+          </div>
+        </div>
+
+        <div class="call-status-bar" id="callStatusText">
+          Click "Start Voice Call" or choose a prompt to begin
+        </div>
+      </div>
+
+      <!-- Call Controls -->
+      <div class="controls-container">
+        <div class="primary-voice-controls">
+          <button id="toggleCallBtn" class="btn btn-primary">
+            <svg id="micIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+            <span id="callBtnText">Start Voice Call</span>
+          </button>
+          
+          <button id="interruptBtn" class="btn btn-outline" style="display:none;" title="Interrupt KAM and speak">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            <span>Interrupt</span>
+          </button>
+
+          <button id="replayBtn" class="btn btn-outline btn-sm" title="Replay KAM's last voice response">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            <span>Replay Audio</span>
+          </button>
+        </div>
+
+        <!-- Quick Seller Prompts (Test Scenarios for Interviewer) -->
+        <div class="quick-prompts-section">
+          <div class="quick-prompts-label">Quick Test Scenarios (Click to speak as Seller):</div>
+          <div class="quick-prompts-chips">
+            <span class="chip" data-text="My sales have dropped significantly this month. I don't understand why. Can you help me?">
+              📉 "My sales dropped significantly this month..."
+            </span>
+            <span class="chip" data-text="Did my product pricing cause this? Are competitors selling cheaper?">
+              🏷️ "Is my pricing wrong?"
+            </span>
+            <span class="chip" data-text="Why did my cancellation rate shoot up to 14%? What is going on?">
+              ⚠️ "Why did cancellations jump to 14%?"
+            </span>
+            <span class="chip" data-text="My supplier delayed raw materials so 13 items ran out of stock. What should I do first?">
+              📦 "Supplier delayed raw materials..."
+            </span>
+            <span class="chip" data-text="Please summarize the key issues and give me my 3 action steps.">
+              📝 "Summarize my 3 action steps"
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Two-Way Transcript -->
+      <div class="card-header" style="background:#f8fafc; border-top:1px solid var(--border); padding: 10px 20px;">
+        <span style="font-size: 12px; font-weight:700; color: var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px;">
+          Live Call Transcript
+        </span>
+        <button id="clearChatBtn" class="btn btn-outline btn-sm" style="padding: 2px 8px; font-size: 11px;">Clear</button>
+      </div>
+      
+      <div class="transcript-box" id="transcriptBox">
+        <!-- Initial Welcome Message from KAM -->
+        <div class="message-bubble kam">
+          <div class="sender-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span>Priya Sharma (Snapdeal KAM)</span>
+          </div>
+          <div class="bubble-content">
+            Namaste Rajesh ji! I'm Priya, your Snapdeal AI Virtual Key Account Manager. I noticed you called regarding your store performance. How can I help you grow today?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Business Metrics & Live KAM Diagnosis -->
+    <section class="right-panel">
+
+      <!-- Metrics Telemetry Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <span>Seller Monthly Telemetry (Actuals)</span>
+          </div>
+          <span style="font-size: 11px; background: #f1f5f9; padding: 3px 8px; border-radius: 6px; font-weight: 600; color: var(--text-secondary);">
+            30-Day Window
+          </span>
+        </div>
+
+        <div class="card-body">
+          <div class="metrics-grid">
+            <!-- Metric 1: Sales -->
+            <div class="metric-card highlight-danger">
+              <div class="metric-label">
+                <span>Total Gross Sales</span>
+                <span>Revenue</span>
+              </div>
+              <div class="metric-values">
+                <span class="current-value">₹1,35,000</span>
+                <span class="previous-value">₹2,00,000</span>
+              </div>
+              <div class="metric-delta delta-down">
+                🔻 -32.5% (-₹65,000)
+              </div>
+            </div>
+
+            <!-- Metric 2: Orders -->
+            <div class="metric-card highlight-danger">
+              <div class="metric-label">
+                <span>Orders Fulfilled</span>
+                <span>Volume</span>
+              </div>
+              <div class="metric-values">
+                <span class="current-value">270</span>
+                <span class="previous-value">400</span>
+              </div>
+              <div class="metric-delta delta-down">
+                🔻 -32.5% (-130 orders)
+              </div>
+            </div>
+
+            <!-- Metric 3: Cancellation Rate -->
+            <div class="metric-card highlight-danger">
+              <div class="metric-label">
+                <span>Cancellation Rate</span>
+                <span>Risk Flag</span>
+              </div>
+              <div class="metric-values">
+                <span class="current-value" style="color:var(--danger);">14.0%</span>
+                <span class="previous-value">8.0%</span>
+              </div>
+              <div class="metric-delta delta-up-bad">
+                ⚠️ +75% Spike (+600 bps)
+              </div>
+            </div>
+
+            <!-- Metric 4: ASP -->
+            <div class="metric-card highlight-neutral">
+              <div class="metric-label">
+                <span>Avg Selling Price</span>
+                <span>Pricing</span>
+              </div>
+              <div class="metric-values">
+                <span class="current-value">₹500</span>
+                <span class="previous-value">₹500</span>
+              </div>
+              <div class="metric-delta delta-neutral">
+                ⚖️ 0.0% (Stable Demand)
+              </div>
+            </div>
+
+            <!-- Metric 5: Out of stock -->
+            <div class="metric-card highlight-warning" style="grid-column: span 2;">
+              <div class="metric-label">
+                <span>Out-of-Stock SKUs (High Velocity)</span>
+                <span>Inventory Leakage</span>
+              </div>
+              <div class="metric-values">
+                <span class="current-value" style="color:#d97706;">18 SKUs</span>
+                <span class="previous-value">5 SKUs</span>
+              </div>
+              <div class="metric-delta delta-up-bad">
+                🚨 +260% Surge (+13 Missing Top Sellers)
+              </div>
+            </div>
+          </div>
+
+          <!-- Diagnostic Root Cause Summary -->
+          <div class="diagnostic-banner" id="diagnosticBanner">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <div class="diagnostic-text">
+              <h4>Root Cause Identified by KAM</h4>
+              <p id="rootCauseText">
+                Your ASP is steady at ₹500, proving customer interest is intact. Sales plummeted by ₹65,000 because <strong>18 top SKUs ran out of stock</strong>, which triggered a <strong>14% cancellation surge</strong> and suppressed your Snapdeal search ranking.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prescriptive Action Plan Card -->
+      <div class="card" style="flex:1;">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            <span>Prescriptive KAM Action Plan</span>
+          </div>
+          <span class="tag-critical action-tag" id="planStatusTag">In Progress</span>
+        </div>
+
+        <div class="card-body">
+          <div class="action-items-list" id="actionItemsList">
+            
+            <!-- Action Item 1 -->
+            <div class="action-item" id="act1">
+              <div class="action-num">1</div>
+              <div class="action-details">
+                <h5>Priority Restock: Top 5 Hero SKUs within 48h</h5>
+                <p>Top 5 out-of-stock items drove 60% of last month's volume (~100 lost orders). Restock minimum 30 units per SKU to restore Snapdeal organic listing rank.</p>
+                <span class="action-tag tag-critical">Immediate • Recovers ~₹50,000</span>
+              </div>
+            </div>
+
+            <!-- Action Item 2 -->
+            <div class="action-item" id="act2">
+              <div class="action-num">2</div>
+              <div class="action-details">
+                <h5>Fix Warehouse Inventory Sync & Buffer (Zero Phantom Orders)</h5>
+                <p>14% cancellation rate is penalizing seller tier score. Set a 5-unit buffer threshold in Seller Central so sold-out items auto-delist before unfulfillable orders occur.</p>
+                <span class="action-tag tag-high">Target: Cancellation &lt; 8%</span>
+              </div>
+            </div>
+
+            <!-- Action Item 3 -->
+            <div class="action-item" id="act3">
+              <div class="action-num">3</div>
+              <div class="action-details">
+                <h5>Launch Snapdeal "Payday Boost" Campaign on Active 32 SKUs</h5>
+                <p>Enroll existing active catalog in Snapdeal Flash Promotion with ₹40 instant voucher to recover immediate order velocity while awaiting vendor replenishment.</p>
+                <span class="action-tag tag-growth">Growth • Est. +45 Orders/Week</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="actions-footer">
+            <button id="copySummaryBtn" class="btn btn-outline btn-sm" style="flex:1;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy WhatsApp Brief</span>
+            </button>
+            <button id="exportPdfBtn" class="btn btn-primary btn-sm" style="flex:1;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Export KAM Memo</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-title">
+        <span>AI Engine & Voice Settings</span>
+        <button id="closeSettingsBtn" style="background:none; border:none; cursor:pointer; font-size:18px;">✕</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">AI Reasoning Engine</label>
+        <select id="engineSelect" class="form-select">
+          <option value="builtin" selected>Built-in Snapdeal Domain KAM Brain (Instant, Zero Key Required)</option>
+          <option value="gemini">Google Gemini Live / Flash API (Bring Your Own Key)</option>
+          <option value="openai">OpenAI GPT-4o / Realtime API (Bring Your Own Key)</option>
+        </select>
+        <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block;">
+          Built-in engine contains expert few-shot KAM dialogue management specifically tuned for Snapdeal seller diagnosis.
+        </span>
+      </div>
+
+      <div class="form-group" id="apiKeyGroup" style="display:none;">
+        <label class="form-label" id="apiKeyLabel">API Key</label>
+        <input type="password" id="apiKeyInput" class="form-input" placeholder="Enter API Key...">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">KAM Voice Preference (Text-To-Speech)</label>
+        <select id="voiceSelect" class="form-select">
+          <option value="auto">Auto-detect best Indian English / Natural Voice</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Speech Rate: <span id="rateLabel">1.05x</span></label>
+        <input type="range" id="rateSlider" min="0.8" max="1.3" step="0.05" value="1.05" style="width:100%;">
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+        <button id="saveSettingsBtn" class="btn btn-primary btn-sm">Save & Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <span id="toastMsg">Action plan copied to clipboard!</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
